@@ -1,0 +1,25 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence_1_0.xsd"
+	version="1.0">
+	<persistence-unit name="jpa_work" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<mapping-file>META-INF/eclipselink-orm.xml</mapping-file>
+		<class>com.pallav.jpa_work.entity.Country</class>
+		<class>com.pallav.jpa_work.entity.Department</class>
+		<class>com.pallav.jpa_work.entity.Employee</class>
+		<class>com.pallav.jpa_work.entity.Job</class>
+		<class>com.pallav.jpa_work.entity.Location</class>
+		<class>com.pallav.jpa_work.entity.Region</class>
+		<class>com.pallav.jpa_work.entity.JobHistory</class>
+		<class>com.pallav.jpa_work.entity.JobHistoryPK</class>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:oracle:thin:@localhost:1521:xe" />
+			<property name="javax.persistence.jdbc.user" value="hr" />
+			<property name="javax.persistence.jdbc.password" value="pallav" />
+		</properties>
+	</persistence-unit>
+</persistence>
