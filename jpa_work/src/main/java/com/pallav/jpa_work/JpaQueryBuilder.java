@@ -25,6 +25,8 @@ public class JpaQueryBuilder {
 		//JpaHelper.getEntityManager(entityManager).getActiveSession().executeQuery(query);
 		
 		
+		//
+		
 		
 	}
 	
