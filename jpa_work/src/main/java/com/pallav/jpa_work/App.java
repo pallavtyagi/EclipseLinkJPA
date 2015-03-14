@@ -12,4 +12,7 @@ public class App
         System.out.println( "Hello World!" );
         System.out.println(Persistence.createEntityManagerFactory("jpa_work").isOpen());
     }
+    
+    
+    
 }
