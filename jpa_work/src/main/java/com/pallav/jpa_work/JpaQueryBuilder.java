@@ -1,45 +1,76 @@
 package com.pallav.jpa_work;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
+import com.pallav.jpa_work.entity.*;
 
-import org.eclipse.persistence.jpa.JpaHelper;
-import org.eclipse.persistence.queries.ReadAllQuery;
-
+/**
+ * Service class for getting the results
+ * */
 public class JpaQueryBuilder {
-	
-	public void executeQuery()
-	{
-		
+
+	public void executeQuery() {
+
 		EntityManager entityManager = getEntityManager();
-		CriteriaQuery<Tuple> criteriaQuery = entityManager.getCriteriaBuilder().createTupleQuery();
-		
-		criteriaQuery = buildQuery(criteriaQuery, entityManager.getCriteriaBuilder(), null);
-		Query query = entityManager.createQuery(criteriaQuery);
-		
-		//ReadAllQuery raQuery = 
-		//JpaHelper.getEntityManager(entityManager).getActiveSession().executeQuery(query);
-		
-		
-		//
-		
-		
+		CriteriaQuery<Tuple> criteriaQuery = entityManager.getCriteriaBuilder()
+				.createTupleQuery();
+
+		criteriaQuery = buildQuery(criteriaQuery,
+				entityManager.getCriteriaBuilder(), null);
+		printResults(entityManager.createQuery(criteriaQuery));
 	}
-	
-	public EntityManager getEntityManager(){
-		return Persistence.createEntityManagerFactory("jpa_work").createEntityManager();
+
+	/**
+	 * @return EntityManager
+	 * 
+	 * */
+	public EntityManager getEntityManager() {
+		return Persistence.createEntityManagerFactory("jpa_work")
+				.createEntityManager();
 	}
-	
-	//TODO add , QueryParameters parameters to this method to get the dynamic where conditions.
-	public CriteriaQuery<Tuple> buildQuery(CriteriaQuery<Tuple> query, CriteriaBuilder cb, String[] parameters)
-	{
+
+	// TODO add , QueryParameters parameters to this method to get the dynamic
+	// where conditions.
+	public CriteriaQuery<Tuple> buildQuery(CriteriaQuery<Tuple> query,
+			CriteriaBuilder cb, String[] parameters) {
+		Root<Employee> employee = query.from(Employee.class);
+		Join<Employee, Department> department = employee.join("department");
+
+		query.multiselect(employee.get("salary"), employee.get("firstName"),
+				employee.get("lastName"), employee.get("hireDate"),
+				employee.get("phoneNumber"), department.get("departmentName"),
+				department.get("departmentId"));
+
+		// query.where(cb.in(department.get("departmentName"), "Marketing");
+		query.where(cb.equal(department.get("departmentName"), "Marketing"));
+
 		return query;
-		
+
 	}
-	
+
+	public void printResults(Query query) {
+		System.out.println("Sql Statement - " + query.toString());
+
+		@SuppressWarnings("unchecked")
+		List<Tuple> results = query.getResultList();
+		for (int i = 0; i < results.size(); i++) {
+			
+			Tuple tuple = (Tuple) results.get(i);
+
+			Object[] row = tuple.toArray();
+
+			for (int j = 0; j < row.length; j++) {
+				System.out.print(" " + tuple.get(j));
+			}
+		}
+	}
 
 }
