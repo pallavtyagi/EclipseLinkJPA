@@ -42,15 +42,19 @@ public class JpaQueryBuilder {
 	public CriteriaQuery<Tuple> buildQuery(CriteriaQuery<Tuple> query,
 			CriteriaBuilder cb, String[] parameters) {
 		Root<Employee> employee = query.from(Employee.class);
-		Join<Employee, Department> department = employee.join("department");
+		Join<Employee, Department> department = employee
+				.join(Employee_.department);
 
-		query.multiselect(employee.get("salary"), employee.get("firstName"),
-				employee.get("lastName"), employee.get("hireDate"),
-				employee.get("phoneNumber"), department.get("departmentName"),
-				department.get("departmentId"));
+		query.multiselect(employee.get(Employee_.salary),
+				employee.get(Employee_.firstName),
+				employee.get(Employee_.lastName),
+				employee.get(Employee_.hireDate),
+				employee.get(Employee_.phoneNumber),
+				department.get(Department_.departmentName),
+				department.get(Department_.departmentId));
 
 		// query.where(cb.in(department.get("departmentName"), "Marketing");
-		query.where(cb.equal(department.get("departmentName"), "Marketing"));
+		query.where(cb.equal(department.get(Department_.departmentName),"Marketing"));
 
 		return query;
 
@@ -62,7 +66,7 @@ public class JpaQueryBuilder {
 		@SuppressWarnings("unchecked")
 		List<Tuple> results = query.getResultList();
 		for (int i = 0; i < results.size(); i++) {
-			
+
 			Tuple tuple = (Tuple) results.get(i);
 
 			Object[] row = tuple.toArray();
