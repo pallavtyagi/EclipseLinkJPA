@@ -20,11 +20,9 @@ public class JpaQueryBuilder {
 	public void executeQuery() {
 
 		EntityManager entityManager = getEntityManager();
-		CriteriaQuery<Tuple> criteriaQuery = entityManager.getCriteriaBuilder()
-				.createTupleQuery();
+		CriteriaQuery<Tuple> criteriaQuery = entityManager.getCriteriaBuilder().createTupleQuery();
 
-		criteriaQuery = buildQuery(criteriaQuery,
-				entityManager.getCriteriaBuilder(), null);
+		criteriaQuery = buildQuery(criteriaQuery,entityManager.getCriteriaBuilder(), null);
 		printResults(entityManager.createQuery(criteriaQuery));
 	}
 
@@ -33,17 +31,14 @@ public class JpaQueryBuilder {
 	 * 
 	 * */
 	public EntityManager getEntityManager() {
-		return Persistence.createEntityManagerFactory("jpa_work")
-				.createEntityManager();
+		return Persistence.createEntityManagerFactory("jpa_work").createEntityManager();
 	}
 
 	// TODO add , QueryParameters parameters to this method to get the dynamic
 	// where conditions.
-	public CriteriaQuery<Tuple> buildQuery(CriteriaQuery<Tuple> query,
-			CriteriaBuilder cb, String[] parameters) {
+	public CriteriaQuery<Tuple> buildQuery(CriteriaQuery<Tuple> query, CriteriaBuilder cb, String[] parameters) {
 		Root<Employee> employee = query.from(Employee.class);
-		Join<Employee, Department> department = employee
-				.join(Employee_.department);
+		Join<Employee, Department> department = employee.join(Employee_.department);
 
 		query.multiselect(employee.get(Employee_.salary),
 				employee.get(Employee_.firstName),
