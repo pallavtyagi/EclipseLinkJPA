@@ -2,7 +2,6 @@ package com.pallav.jpa_work;
 
 import javax.persistence.Persistence;
 
-import org.eclipse.persistence.jpa.JpaHelper;
 /**
  * Hello world!
  *
