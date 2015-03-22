@@ -14,8 +14,12 @@ public class App
         System.out.println( "Hello World!" );
         System.out.println(Persistence.createEntityManagerFactory("jpa_work").isOpen());
         
-        JpaQueryBuilder jb = new JpaQueryBuilder();
-        jb.executeQuery();
+      //  JpaQueryBuilder jb = new JpaQueryBuilder();
+       // jb.executeQuery();
+        
+        
+        JpaTransaction trans = new JpaTransaction();
+        trans.createTransaction();
         
         
     }

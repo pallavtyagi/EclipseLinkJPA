@@ -24,6 +24,9 @@ public class JpaQueryBuilder {
 
 		criteriaQuery = buildQuery(criteriaQuery,entityManager.getCriteriaBuilder(), null);
 		printResults(entityManager.createQuery(criteriaQuery));
+		
+		
+		
 	}
 
 	/**
